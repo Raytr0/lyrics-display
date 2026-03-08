@@ -33,9 +33,15 @@ function displayLine() {
         lyricsDisplay.style.opacity = '1';
     }, 100);
 
-    // Update button states
-    prevBtn.disabled = currentLine === 0 && !isPlaying;
-    nextBtn.disabled = currentLine === lyrics.length - 1 && !isPlaying;
+    updateButtonStates();
+}
+
+function updateButtonStates() {
+    const atStart = currentLine === 0;
+    const atEnd = currentLine === lyrics.length - 1;
+
+    prevBtn.disabled = atStart || isPlaying;
+    nextBtn.disabled = atEnd || isPlaying;
 }
 
 function nextLine() {
@@ -65,7 +71,7 @@ function togglePlay() {
 
 function startPlaying() {
     isPlaying = true;
-    playBtn.textContent = 'Stop';
+    playBtn.textContent = 'Pause';
     playBtn.classList.add('playing');
 
     // If at the end, start from beginning
@@ -89,21 +95,13 @@ function stopPlaying() {
         clearInterval(playInterval);
         playInterval = null;
     }
+
+    updateButtonStates();
 }
 
 // Event listeners
-nextBtn.addEventListener('click', () => {
-    if (!isPlaying) {
-        nextLine();
-    }
-});
-
-prevBtn.addEventListener('click', () => {
-    if (!isPlaying) {
-        prevLine();
-    }
-});
-
+nextBtn.addEventListener('click', nextLine);
+prevBtn.addEventListener('click', prevLine);
 playBtn.addEventListener('click', togglePlay);
 
 // Keyboard navigation
@@ -111,9 +109,9 @@ document.addEventListener('keydown', (e) => {
     if (e.code === 'Space') {
         e.preventDefault();
         togglePlay();
-    } else if (e.code === 'ArrowRight' && !isPlaying) {
+    } else if (e.code === 'ArrowRight') {
         nextLine();
-    } else if (e.code === 'ArrowLeft' && !isPlaying) {
+    } else if (e.code === 'ArrowLeft') {
         prevLine();
     }
 });
