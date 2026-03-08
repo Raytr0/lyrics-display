@@ -8,20 +8,28 @@
 </head>
 <body>
     <div class="container">
-        <h1>Bad Romance - Lady Gaga</h1>
-        <div class="lyrics-display" id="lyricsDisplay">
+        <div class="song-info">
+            <h1 class="song-title">Bad Romance</h1>
+            <div class="artist">Lady Gaga</div>
+        </div>
+        <div class="song-credits">Lady Gaga</div>
+        <div class="lyrics-display" id="lyricsDisplay" role="region" aria-live="polite" aria-atomic="true">
             Loading lyrics...
         </div>
-        <div class="line-counter" id="lineCounter">
+        <div class="line-counter" id="lineCounter" aria-label="Current position">
             Line 1 of 105
         </div>
-        <div class="progress-bar">
+        <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="105" aria-label="Song progress">
             <div class="progress-fill" id="progressFill"></div>
         </div>
-        <div class="controls">
-            <button id="prevBtn" class="btn">Previous</button>
-            <button id="playBtn" class="btn btn-primary">Play</button>
-            <button id="nextBtn" class="btn">Next</button>
+        <div class="controls" role="group" aria-label="Playback controls">
+            <button id="prevBtn" class="btn" aria-label="Previous line">Previous</button>
+            <button id="playBtn" class="btn btn-primary" aria-label="Play or pause">Play</button>
+            <button id="nextBtn" class="btn" aria-label="Next line">Next</button>
+        </div>
+        <div class="keyboard-hints" aria-hidden="true">
+            <span>Space: Play/Pause</span>
+            <span>&larr; &rarr;: Navigate</span>
         </div>
     </div>
     <script src="app.js"></script>

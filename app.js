@@ -5,7 +5,8 @@ let playInterval = null;
 
 const lyricsDisplay = document.getElementById('lyricsDisplay');
 const lineCounter = document.getElementById('lineCounter');
-const progressFill = document.querySelector('.progress-fill');
+const progressBar = document.querySelector('.progress-bar');
+const progressFill = document.getElementById('progressFill');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const playBtn = document.getElementById('playBtn');
@@ -26,6 +27,7 @@ async function loadLyrics() {
 function updateProgress() {
     const progress = ((currentLine + 1) / lyrics.length) * 100;
     progressFill.style.width = `${progress}%`;
+    progressBar.setAttribute('aria-valuenow', currentLine + 1);
 }
 
 function displayLine() {

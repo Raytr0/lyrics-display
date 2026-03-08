@@ -277,6 +277,38 @@ body::after {
     transform: scale(0.97);
 }
 
+/* Focus styles for keyboard navigation */
+.btn:focus {
+    outline: 2px solid var(--accent-teal);
+    outline-offset: 3px;
+}
+
+.btn:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--accent-teal);
+    outline-offset: 3px;
+}
+
+/* Keyboard hints */
+.keyboard-hints {
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.6;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.keyboard-hints span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
 /* Mobile adjustments */
 @media (max-width: 480px) {
     .container {
@@ -310,6 +342,10 @@ body::after {
         min-width: 120px;
         order: -1;
         width: 100%;
+    }
+
+    .keyboard-hints {
+        display: none;
     }
 }
 
