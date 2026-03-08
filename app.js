@@ -5,6 +5,7 @@ let playInterval = null;
 
 const lyricsDisplay = document.getElementById('lyricsDisplay');
 const lineCounter = document.getElementById('lineCounter');
+const progressFill = document.querySelector('.progress-fill');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const playBtn = document.getElementById('playBtn');
@@ -22,16 +23,28 @@ async function loadLyrics() {
     }
 }
 
+function updateProgress() {
+    const progress = ((currentLine + 1) / lyrics.length) * 100;
+    progressFill.style.width = `${progress}%`;
+}
+
 function displayLine() {
     if (lyrics.length === 0) return;
 
-    lyricsDisplay.style.opacity = '0';
+    // Fade out
+    lyricsDisplay.classList.remove('fade-in');
+    lyricsDisplay.classList.add('fade-out');
 
     setTimeout(() => {
+        // Update content while hidden
         lyricsDisplay.textContent = lyrics[currentLine];
         lineCounter.textContent = `Line ${currentLine + 1} of ${lyrics.length}`;
-        lyricsDisplay.style.opacity = '1';
-    }, 100);
+        updateProgress();
+
+        // Fade in
+        lyricsDisplay.classList.remove('fade-out');
+        lyricsDisplay.classList.add('fade-in');
+    }, 250);
 
     updateButtonStates();
 }
@@ -40,8 +53,8 @@ function updateButtonStates() {
     const atStart = currentLine === 0;
     const atEnd = currentLine === lyrics.length - 1;
 
-    prevBtn.disabled = atStart || isPlaying;
-    nextBtn.disabled = atEnd || isPlaying;
+    prevBtn.disabled = atStart;
+    nextBtn.disabled = atEnd;
 }
 
 function nextLine() {
@@ -49,7 +62,6 @@ function nextLine() {
         currentLine++;
         displayLine();
     } else {
-        // Stop playing at end
         stopPlaying();
     }
 }
@@ -79,6 +91,10 @@ function startPlaying() {
         currentLine = 0;
         displayLine();
     }
+
+    // Enable navigation while playing
+    prevBtn.disabled = false;
+    nextBtn.disabled = false;
 
     // Auto-advance every 2 seconds
     playInterval = setInterval(() => {
